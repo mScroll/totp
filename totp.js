@@ -1,5 +1,5 @@
 ﻿/*
- * 1.0.0.0
+ * 1.0.1.0
  * COPYRIGHT (c) 2020 mScroll
  */
 
@@ -22,6 +22,7 @@ var _SUBSTRING = "substring";
 var _GETTIME = "getTime";
 var _LENGTH = "length";
 var _VALUE = "value";
+var _READONLY = "readOnly";
 var _ONLOAD = "onload";
 var _ONCLICK = "onclick";
 var _ONBLUR = "onblur";
@@ -125,8 +126,8 @@ var _FILEINPUT = _ENUMS();
 
 var _Base32 = _EMPTY;
 var _Secret = new _UINT8ARRAY(5);
-var _Input = true;
 var _Count = 0;
+var _Input = true;
 var _Load = true;
 
 var _SECRET_F = function ()
@@ -212,11 +213,14 @@ var _SHOW_F = function ()
 var _CLEARVALUE_F = function ()
    {
    _SETVALUE(_FILENAME,
-      _INNERHTML, _EMPTY);
+      _DISPLAY, _NONE);
+   _NTH_ELEMENT(_FILENAME)[_VALUE] = _EMPTY;
    _SETVALUE(_FILESIZE,
-      _INNERHTML, _EMPTY);
+      _DISPLAY, _NONE);
+   _NTH_ELEMENT(_FILESIZE)[_VALUE] = _EMPTY;
    _SETVALUE(_SHA1VALUE,
-      _INNERHTML, _EMPTY);
+      _DISPLAY, _NONE);
+   _NTH_ELEMENT(_SHA1VALUE)[_VALUE] = _EMPTY;
    };
 
 var _FILEINPUT_F = function ()
@@ -249,14 +253,19 @@ var _FILEINPUT_P = function (Filename_, Data_)
    if (! _Input && Filename_ !== _EMPTY)
       {
       _SETVALUE(_FILENAME,
-         _INNERHTML, _FILENAME_T + Filename_);
+         _DISPLAY, _NULL);
+      _NTH_ELEMENT(_FILENAME)[_VALUE] =
+         _FILENAME_T
+         + Filename_;
 
       if (Data_[_LENGTH] < 1024)
          {
          _SETVALUE(_FILESIZE,
-            _INNERHTML, _FILESIZE_T[0]
+            _DISPLAY, _NULL);
+         _NTH_ELEMENT(_FILESIZE)[_VALUE] =
+            _FILESIZE_T[0]
             + Data_[_LENGTH]
-            + _FILESIZE_T[3]);
+            + _FILESIZE_T[3];
          }
       else
          {
@@ -309,11 +318,13 @@ var _FILEINPUT_P = function (Filename_, Data_)
             }
 
          _SETVALUE(_FILESIZE,
-            _INNERHTML, _FILESIZE_T[0]
+            _DISPLAY, _NULL);
+         _NTH_ELEMENT(_FILESIZE)[_VALUE] =
+            _FILESIZE_T[0]
             + u
             + _FILESIZE_T[1]
             + w
-            + _FILESIZE_T[2]);
+            + _FILESIZE_T[2];
          }
 
       u = new _UINT8ARRAY(20);
@@ -339,7 +350,10 @@ var _FILEINPUT_P = function (Filename_, Data_)
          }
 
       _SETVALUE(_SHA1VALUE,
-         _INNERHTML, _SHA1VALUE_T + v);
+         _DISPLAY, _NULL);
+      _NTH_ELEMENT(_SHA1VALUE)[_VALUE] =
+         _SHA1VALUE_T
+         + v;
       }
 
    _Input = true;
@@ -428,9 +442,9 @@ totp.load = function ()
             + "<br>を選択して、SHA-1 を表示します")
          + _LABEL(_LABEL2, _FILEINPUT, "参照")
          + _SPAN(_CLEARVALUE, "クリア")
-         + _SPAN(_FILENAME, _EMPTY)
-         + _SPAN(_FILESIZE, _EMPTY)
-         + _SPAN(_SHA1VALUE, _EMPTY)
+         + _INPUT_TEXT(_FILENAME)
+         + _INPUT_TEXT(_FILESIZE)
+         + _INPUT_TEXT(_SHA1VALUE)
          + _INPUT_FILE(_FILEINPUT),
          _RESIZE);
 
@@ -503,16 +517,31 @@ totp.load = function ()
       _NTH_ELEMENT(_CLEARVALUE)[_ONCLICK] = _CLEARVALUE_F;
       _SETVALUE(_FILENAME,
          _POSITION, _ABSOLUTE,
+         _WIDTH, 360,
+         _HEIGHT, 15,
          _TOP, 270 + 17 * 5,
-         _LEFT, 70);
+         _LEFT, 70,
+         _Z_INDEX, 500,
+         _DISPLAY, _NONE);
+      _NTH_ELEMENT(_FILENAME)[_READONLY] = true;
       _SETVALUE(_FILESIZE,
          _POSITION, _ABSOLUTE,
+         _WIDTH, 360,
+         _HEIGHT, 15,
          _TOP, 270 + 17 * 6,
-         _LEFT, 70);
+         _LEFT, 70,
+         _Z_INDEX, 500,
+         _DISPLAY, _NONE);
+      _NTH_ELEMENT(_FILESIZE)[_READONLY] = true;
       _SETVALUE(_SHA1VALUE,
          _POSITION, _ABSOLUTE,
+         _WIDTH, 360,
+         _HEIGHT, 15,
          _TOP, 270 + 17 * 7,
-         _LEFT, 70);
+         _LEFT, 70,
+         _Z_INDEX, 500,
+         _DISPLAY, _NONE);
+      _NTH_ELEMENT(_SHA1VALUE)[_READONLY] = true;
       _SETVALUE(_FILEINPUT,
          _POSITION, _ABSOLUTE,
          _DISPLAY, _NONE);
