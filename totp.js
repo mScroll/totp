@@ -1,5 +1,5 @@
 ﻿/*
- * 1.0.1.0
+ * 1.0.2.0
  * COPYRIGHT (c) 2020 mScroll
  */
 
@@ -13,7 +13,6 @@ var totp = {};
 
 var _WINDOW = window;
 var _MATH = _WINDOW.Math;
-var _CEIL = _MATH.ceil;
 var _FLOOR = _MATH.floor;
 var _DATE = _WINDOW.Date;
 var _UINT8ARRAY = _WINDOW.Uint8Array;
@@ -125,7 +124,7 @@ var _SHA1VALUE = _ENUMS();
 var _FILEINPUT = _ENUMS();
 
 var _Base32 = _EMPTY;
-var _Secret = new _UINT8ARRAY(5);
+var _Secret = new _UINT8ARRAY(0);
 var _Count = 0;
 var _Input = true;
 var _Load = true;
@@ -137,7 +136,6 @@ var _SECRET_F = function ()
    var w;
    var s;
    var t;
-   var r;
 
    if (u !== _Base32)
       {
@@ -160,31 +158,34 @@ var _SECRET_F = function ()
             }
          }
 
-      u = _CEIL(w[_LENGTH] / 8);
-      v = u * 8;
+      _Secret = new _UINT8ARRAY(_FLOOR(w[_LENGTH] * 5 / 8));
+      u = 0;
+      v = 0;
+      s = 0;
+      t = 0;
 
-      for (s = w[_LENGTH]; s < v; ++ s)
+      for (; ; )
          {
-         w[w[_LENGTH]] = 0;
-         }
-
-      _Secret = new _UINT8ARRAY(u * 5);
-
-      for (s = 0 , t = 0; s < w[_LENGTH]; s += 8 , t += 5)
-         {
-         v = s + 1;
-         _Secret[t] = w[s] << 3 | w[v] >>> 2;
-         u = 0;
-
-         for (r = 30; 0 <= r; r -= 5 , ++ v)
+         if (u < 8)
             {
-            u |= w[v] << r;
+            if (s < w[_LENGTH])
+               {
+               u += 5;
+               v = v << 5 | w[s];
+               ++ s;
+               }
+            else
+               {
+               break;
+               }
             }
-
-         _Secret[t + 1] = u >>> 24;
-         _Secret[t + 2] = u >>> 16;
-         _Secret[t + 3] = u >>> 8;
-         _Secret[t + 4] = u;
+         else
+            {
+            u -= 8;
+            _Secret[t] = v >>> u;
+            ++ t;
+            v &= (1 << u) - 1;
+            }
          }
 
       _NTH_ELEMENT(_SECRET)[_VALUE] = _Base32;
