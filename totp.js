@@ -1,5 +1,5 @@
 ﻿/*
- * 1.0.2.0
+ * 1.0.3.0
  * COPYRIGHT (c) 2020 mScroll
  */
 
@@ -126,7 +126,6 @@ var _FILEINPUT = _ENUMS();
 var _Base32 = _EMPTY;
 var _Secret = new _UINT8ARRAY(0);
 var _Count = 0;
-var _Input = true;
 var _Load = true;
 
 var _SECRET_F = function ()
@@ -228,13 +227,12 @@ var _FILEINPUT_F = function ()
    {
    var u;
 
-   if (_Input && _READY())
+   if (_READY())
       {
       u = _FILE(_FILEINPUT);
 
       if (u !== _NULL)
          {
-         _Input = false;
          _REGISTER_READER(_FILEINPUT_P);
          _READ(u);
          }
@@ -251,7 +249,7 @@ var _FILEINPUT_P = function (Filename_, Data_)
    var x;
    var s;
 
-   if (! _Input && Filename_ !== _EMPTY)
+   if (Filename_ !== _EMPTY)
       {
       _SETVALUE(_FILENAME,
          _DISPLAY, _NULL);
@@ -356,8 +354,6 @@ var _FILEINPUT_P = function (Filename_, Data_)
          _SHA1VALUE_T
          + v;
       }
-
-   _Input = true;
    };
 
 var _RESIZE = function (Width_, Height_)
