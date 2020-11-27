@@ -1,5 +1,5 @@
 ﻿/*
- * 1.0.3.0
+ * 1.0.4.0
  * COPYRIGHT (c) 2020 mScroll
  */
 
@@ -259,11 +259,35 @@ var _FILEINPUT_P = function (Filename_, Data_)
 
       if (Data_[_LENGTH] < 1024)
          {
+         v = _EMPTY + Data_[_LENGTH];
+         w = _EMPTY;
+
+         for (s = v[_LENGTH]; 0 < s; s -= 3)
+            {
+            x = s - 3;
+
+            if (x < 0)
+               {
+               x = 0;
+               }
+
+            w = v[_SUBSTRING](x, s) + w;
+
+            if (x === 0)
+               {
+               break;
+               }
+            else
+               {
+               w = _COMMA + w;
+               }
+            }
+
          _SETVALUE(_FILESIZE,
             _DISPLAY, _NULL);
          _NTH_ELEMENT(_FILESIZE)[_VALUE] =
             _FILESIZE_T[0]
-            + Data_[_LENGTH]
+            + w
             + _FILESIZE_T[3];
          }
       else
