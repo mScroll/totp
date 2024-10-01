@@ -6,8 +6,6 @@ RFC 6238 のワンタイム パスワードを生成するアプリです。
   
 ダウンロードおよび更新履歴は公式サイトよりご確認ください。  
 [https://www.mscroll.net/totp/](https://www.mscroll.net/totp/)  
-※次の URL も利用可能です。  
-[https://ae.mscroll.net/totp/](https://ae.mscroll.net/totp/)  
   
 ## 使用条件  
 以下の使用条件をご確認ください。  
